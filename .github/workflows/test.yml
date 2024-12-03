@@ -16,16 +16,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up JDK 17
+    - name: Set up JDK 17 (Adoptium)
       uses: actions/setup-java@v2
       with:
         java-version: '17'
-        distribution: 'adoptopenjdk'
+        distribution: 'adoptium'
 
     - name: Build with IntelliJ
       run: |
         java -version
-        javac -d out src/loginapp/loginApp.java src/test/loginApptest.java
+        javac -d out src/loginapp/loginapp.java src/test/loginApptest.java
 
     - name: Run tests with JUnit
       run: |
