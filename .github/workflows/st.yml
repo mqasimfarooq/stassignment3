@@ -1,0 +1,37 @@
+name: Java CI with IntelliJ
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'  # Use your desired Java version
+          distribution: 'adoptopenjdk'
+
+      - name: Install JUnit dependencies
+        run: |
+          wget https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.7.2/junit-jupiter-api-5.7.2.jar
+          wget https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.7.2/junit-jupiter-engine-5.7.2.jar
+          wget https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-params/5.7.2/junit-jupiter-params-5.7.2.jar
+
+      - name: Compile the tests
+        run: javac -cp ".:junit-jupiter-api-5.7.2.jar:junit-jupiter-engine-5.7.2.jar:junit-jupiter-params-5.7.2.jar" src/test/java/com/example/*.java
+
+      - name: Run the tests
+        run: java -cp ".:junit-jupiter-api-5.7.2.jar:junit-jupiter-engine-5.7.2.jar:junit-jupiter-params-5.7.2.jar" org.junit.jupiter.api.Test
