@@ -1,4 +1,4 @@
-name: Java CI with IntelliJ
+name: Java CI with IntelliJ and JUnit
 
 on:
   push:
@@ -15,23 +15,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Set up Java environment
       - name: Set up Java
         uses: actions/setup-java@v2
         with:
-          java-version: '11'  # Specify your required Java version
-          distribution: 'temurin'  # Updated to Eclipse Adoptium's Temurin distribution
+          java-version: '11' # Use the required Java version
+          distribution: 'temurin' # Updated for compatibility
 
+      # Download JUnit dependencies
       - name: Install JUnit dependencies
         run: |
-          wget https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.7.2/junit-jupiter-api-5.7.2.jar
-          wget https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.7.2/junit-jupiter-engine-5.7.2.jar
-          wget https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-params/5.7.2/junit-jupiter-params-5.7.2.jar
+          mkdir -p lib
+          wget -P lib https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/5.7.2/junit-jupiter-api-5.7.2.jar
+          wget -P lib https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-engine/5.7.2/junit-jupiter-engine-5.7.2.jar
+          wget -P lib https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-params/5.7.2/junit-jupiter-params-5.7.2.jar
 
+      # Compile the Java files
       - name: Compile the tests
-        run: javac -cp ".:junit-jupiter-api-5.7.2.jar:junit-jupiter-engine-5.7.2.jar:junit-jupiter-params-5.7.2.jar" src/test/java/com/example/*.java
+        run: |
+          javac -cp "./lib/*" -d out src/test/java/com/example/*.java
 
+      # Run the tests
       - name: Run the tests
-        run: java -cp ".:junit-jupiter-api-5.7.2.jar:junit-jupiter-engine-5.7.2.jar:junit-jupiter-params-5.7.2.jar" org.junit.jupiter.api.Test
+        run: |
+          java -cp "./out:./lib/*" org.junit.platform.console.ConsoleLauncher \
+          --classpath "./out" \
+          --scan-classpath \
+          --include-package com.example
+
+      # Upload test results (optional)
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: out
