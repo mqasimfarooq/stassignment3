@@ -1,12 +1,12 @@
-name: Java CI
+name: CI
 
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -16,17 +16,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up JDK 17 (Adoptium)
+    - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '17'
-        distribution: 'adoptium'
+        java-version: '11' # Specify your Java version here
 
-    - name: Build with IntelliJ
+    - name: Compile Java code
       run: |
-        java -version
-        javac -d out src/loginapp/loginapp.java src/test/loginApptest.java
+        mkdir -p out
+        javac -d out src/**/*.java # Adjust the path to your source files as needed
 
-    - name: Run tests with JUnit
+    - name: Run Java application
       run: |
-        java -cp out org.junit.runner.JUnitCore loginApptest
+        java -cp out MainClassName # Replace MainClassName with the name of your main class
