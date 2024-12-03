@@ -17,15 +17,16 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up JDK
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
-        java-version: '11' # Specify your Java version here
+        java-version: '17' # Specify your Java version here
+        distribution: 'temurin' # Use 'temurin' for Eclipse Temurin
 
     - name: Compile Java code
       run: |
         mkdir -p out
-        javac -d out src/**/*.java # Adjust the path to your source files as needed
+        javac -d out src/**/*.java # Adjust this path as needed
 
     - name: Run Java application
       run: |
-        java -cp out MainClassName # Replace MainClassName with the name of your main class
+        java -cp out MainClassName # Replace MainClassName with your main class
