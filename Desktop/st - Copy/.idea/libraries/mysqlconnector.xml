@@ -1,0 +1,21 @@
+<component name="libraryTable">
+  <library name="mysqlconnector">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Desktop/mysqlconnector" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/Desktop/mysqlconnector/src/build/java" />
+      <root url="file://$USER_HOME$/Desktop/mysqlconnector/src/demo/java" />
+      <root url="file://$USER_HOME$/Desktop/mysqlconnector/src/generated/java" />
+      <root url="file://$USER_HOME$/Desktop/mysqlconnector/src/legacy/java" />
+      <root url="file://$USER_HOME$/Desktop/mysqlconnector/src/main/core-api/java" />
+      <root url="file://$USER_HOME$/Desktop/mysqlconnector/src/main/core-impl/java" />
+      <root url="file://$USER_HOME$/Desktop/mysqlconnector/src/main/protocol-impl/java" />
+      <root url="file://$USER_HOME$/Desktop/mysqlconnector/src/main/user-api/java" />
+      <root url="file://$USER_HOME$/Desktop/mysqlconnector/src/main/user-impl/java" />
+      <root url="file://$USER_HOME$/Desktop/mysqlconnector/src/test/java" />
+    </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/Desktop/mysqlconnector" recursive="false" />
+  </library>
+</component>
